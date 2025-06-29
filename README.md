@@ -1,5 +1,10 @@
 # 🤖 Telco Customer Churn Prediction - Complete ML Pipeline
 
+[![Portfolio](https://img.shields.io/badge/Portfolio-Project-blue)](https://github.com/fahimvj/telco-customer-churn-prediction)
+[![ML Pipeline](https://img.shields.io/badge/ML-Pipeline-green)](https://github.com/fahimvj/telco-customer-churn-prediction)
+[![Python](https://img.shields.io/badge/Python-3.8+-blue)](https://www.python.org/)
+[![AUC-ROC](https://img.shields.io/badge/AUC--ROC-83.26%25-brightgreen)](https://github.com/fahimvj/telco-customer-churn-prediction)
+
 ## 🎯 Project Overview
 This comprehensive machine learning project analyzes the Telco Customer Churn dataset to build a production-ready churn prediction model. The project follows industry best practices with professional-grade exploratory data analysis, feature engineering, model selection, hyperparameter tuning, and final model evaluation. All code follows modern ML engineering standards with reproducible workflows and comprehensive documentation.
 
@@ -10,6 +15,28 @@ This comprehensive machine learning project analyzes the Telco Customer Churn da
 - ✅ Hyperparameter Tuning Completed
 - ✅ Final Model Selection Completed
 - ✅ Model Evaluation Completed
+
+## 🌟 Portfolio Highlights
+
+### 🎯 Key Achievements
+- **83.26% AUC-ROC Score** on test set with CatBoost model
+- **13 Professional EDA Visualizations** showcasing data storytelling skills
+- **12 Baseline Models** implemented and compared systematically
+- **Complete MLOps Pipeline** with automated testing and CI/CD
+- **Production-Ready Code** with proper documentation and error handling
+
+### 🛠️ Technical Skills Demonstrated
+- **Data Science**: EDA, Feature Engineering, Statistical Analysis
+- **Machine Learning**: Classification, Ensemble Methods, Hyperparameter Tuning
+- **MLOps**: Model Versioning, Pipeline Automation, Performance Monitoring
+- **Software Engineering**: Clean Code, Git Workflow, Documentation
+- **Visualization**: Matplotlib, Seaborn, Professional Chart Design
+
+### 📊 Business Impact
+- **Customer Retention**: Identify at-risk customers before they churn
+- **Revenue Protection**: Potential to save 15-20% annual revenue loss
+- **Marketing Optimization**: Target retention campaigns efficiently
+- **Data-Driven Decisions**: Quantifiable insights for business strategy
 
 ## 📈 Dataset Information
 - **Source**: Kaggle Telco Customer Churn Dataset
@@ -737,9 +764,37 @@ For questions, suggestions, or contributions:
 ### 🎯 **Technical Excellence Standards Met**
 - ✅ **Production-Ready ML Pipeline**: Complete end-to-end machine learning workflow
 - ✅ **Professional Visualization Portfolio**: 13 publication-ready charts following Python Graph Gallery standards
-- ✅ **Advanced Model Selection**: Comprehensive evaluation of 6+ ML algorithms with hyperparameter optimization
+- ✅ **Advanced Model Selection**: Comprehensive evaluation of 12+ ML algorithms with hyperparameter optimization
 - ✅ **Robust Model Performance**: 83.26% AUC-ROC with 79.46% accuracy on test set
 - ✅ **Industry-Standard Documentation**: Complete methodology and reproducible workflows
+
+## 🎯 Portfolio Navigation
+
+### 📊 **For Data Science Roles**
+- **EDA Expertise**: [`02_eda_visuals.ipynb`](EDA_Analysis/02_eda_visuals.ipynb) - 13 professional visualizations
+- **Statistical Analysis**: [`01_dataset_exploration.ipynb`](EDA_Analysis/01_dataset_exploration.ipynb) - Data cleaning & validation
+- **Feature Engineering**: [`feature_engineering.ipynb`](Feature_Engineering/feature_engineering.ipynb) - Advanced feature creation
+
+### 🤖 **For ML Engineering Roles**
+- **Model Development**: [`baseline_models.ipynb`](Models/baseline_models.ipynb) - 12 algorithms compared
+- **Hyperparameter Tuning**: [`hyperparameter_tuning_final_model_selection.ipynb`](Models/hyperparameter_tuning_final_model_selection.ipynb)
+- **Final Model**: [`final_model.ipynb`](Models/final_model.ipynb) - Production deployment
+
+### 📈 **For Business Analytics Roles**
+- **Business Insights**: [Results/reports/](Results/reports/) - Executive summaries
+- **Visual Reports**: [Results/figures/](Results/figures/) - Professional charts
+- **ROI Analysis**: Model performance metrics and business impact calculations
+
+### 🔧 **For Software Engineering Roles**
+- **Clean Code**: Well-documented, modular Python scripts
+- **CI/CD Pipeline**: [`.github/workflows/ci.yml`](.github/workflows/ci.yml) - Automated testing
+- **Version Control**: Professional Git workflow with meaningful commits
+
+---
+
+**⭐ Star this repository if you found it helpful for your learning journey!**
+
+**🔗 Connect with me**: [GitHub Profile](https://github.com/fahimvj)
 
 ### 📊 **Machine Learning Deliverables**
 - ✅ **Final Model**: CatBoost Classifier (83.26% AUC-ROC, 79.46% accuracy)
