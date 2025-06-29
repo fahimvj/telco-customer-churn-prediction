@@ -1,0 +1,9 @@
+Method,Feature_Count
+Total Original Features,62
+Wrapper Selected (RF RFE),20
+Filter Selected (F-test),20
+Filter Selected (Mutual Info),20
+Filter Selected (Correlation),20
+PCA Components (95% var),23
+Common Filter Features,12
+Common RFE Features,5
