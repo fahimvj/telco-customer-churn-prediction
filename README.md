@@ -1,7 +1,7 @@
 # Telco Customer Churn Prediction: A Machine Learning Approach
 
 **Course:** DAS-601: Basic Machine Learning and Artificial Intelligence for Creative Business Analysis  
-**Student:** MD Fahim Shahriar Chowdhury  
+**Student:** [MD Fahim Shahriar Chowdhury] (https://www.linkedin.com/in/fahimvj/)  
 **Instructor:** [Musabbir Hasan Sammak](https://www.linkedin.com/in/musabbir-sammak/)  
 **Institution:** East Delta University  
 
