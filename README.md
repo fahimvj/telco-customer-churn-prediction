@@ -1,939 +1,423 @@
-# 🤖 Telco Customer Churn Prediction - Complete ML Pipeline
+# Telco Customer Churn Prediction: A Machine Learning Approach
 
-[![Portfolio](https://img.shields.io/badge/Portfolio-Project-blue)](https://github.com/fahimvj/telco-customer-churn-prediction)
-[![ML Pipeline](https://img.shields.io/badge/ML-Pipeline-green)](https://github.com/fahimvj/telco-customer-churn-prediction)
-[![Python](https://img.shields.io/badge/Python-3.8+-blue)](https://www.python.org/)
-[![AUC-ROC](https://img.shields.io/badge/AUC--ROC-83.26%25-brightgreen)](https://github.com/fahimvj/telco-customer-churn-prediction)
+**Course:** DAS-601: Basic Machine Learning and Artificial Intelligence for Creative Business Analysis  
+**Student:** MD Fahim Shahriar Chowdhury  
+**Instructor:** [Musabbir Hasan Sammak](https://www.linkedin.com/in/musabbir-sammak/)  
+**Institution:** East Delta University  
 
-## 🎯 Project Overview
-This comprehensive machine learning project analyzes the Telco Customer Churn dataset to build an effective churn prediction model. The project follows industry best practices with professional-grade exploratory data analysis, feature engineering, model selection, hyperparameter tuning, and final model evaluation. The complete pipeline demonstrates end-to-end machine learning workflow with comprehensive documentation and reproducible results.
+## Abstract
 
-**Current Status: Complete ML Pipeline ✅**
-- ✅ EDA Phase Completed
-- ✅ Feature Engineering Completed  
-- ✅ Baseline Models Completed
-- ✅ Hyperparameter Tuning Completed
-- ✅ Final Model Selection Completed
-- ✅ Model Evaluation Completed
+This project develops a comprehensive machine learning pipeline to predict customer churn in the telecommunications industry using the Kaggle Telco Customer Churn dataset. The study implements and compares 12 different classification algorithms, with CatBoost emerging as the optimal model achieving 83.26% AUC-ROC and 79.46% accuracy. Through systematic exploratory data analysis, feature engineering, and hyperparameter optimization, the final model demonstrates strong discriminative power for identifying customers at risk of churning. The solution provides actionable insights for targeted retention strategies and demonstrates practical application of machine learning in business analytics.
 
-## 📊 Dataset Details
+---
 
-### 📈 Dataset Overview
-- **Source**: Kaggle Telco Customer Churn Dataset
-- **Dataset Size**: 7,044 customers × 21 features (including target)
-- **Target Variable**: Churn (Binary: Yes/No)
-- **Domain**: Telecommunications customer behavior analysis
-- **Problem Type**: Binary Classification
-- **Class Distribution**: ~73.5% No Churn, ~26.5% Churn
+## Part I – Problem Statement & Dataset
 
-### � Business Context
-The dataset represents a telecommunications company's customer base with comprehensive information about:
-- **Customer Demographics**: Gender, age group, family status
-- **Service Information**: Phone services, internet type, add-on features
-- **Account Details**: Contract type, payment method, billing preferences  
-- **Usage Metrics**: Tenure, monthly charges, total charges
-- **Outcome**: Whether the customer churned or stayed
+### Background & Motivation
 
-### 📋 Feature Categories
-**Demographic Features (4 features):**
-- `gender`: Customer gender (Male/Female)
-- `SeniorCitizen`: Senior citizen status (0/1)
-- `Partner`: Has partner (Yes/No)
-- `Dependents`: Has dependents (Yes/No)
+Customer churn represents one of the most critical challenges in the telecommunications industry, with acquiring new customers costing 5-25 times more than retaining existing ones. In a highly competitive market, telecommunications companies must proactively identify customers at risk of churning to implement targeted retention strategies. Machine learning provides a powerful approach to analyze customer behavior patterns and predict churn likelihood, enabling data-driven decision making for customer retention efforts.
 
-**Service Features (9 features):**
-- `PhoneService`: Phone service subscription
-- `MultipleLines`: Multiple phone lines
-- `InternetService`: Internet service type (DSL/Fiber optic/No)
-- `OnlineSecurity`, `OnlineBackup`, `DeviceProtection`: Security services
-- `TechSupport`: Technical support subscription
-- `StreamingTV`, `StreamingMovies`: Streaming services
+### Objective
 
-**Account Features (4 features):**
-- `Contract`: Contract term (Month-to-month/One year/Two year)
-- `PaperlessBilling`: Paperless billing preference
-- `PaymentMethod`: Payment method type
-- `tenure`: Customer tenure in months
+The primary objective is to develop a predictive model that accurately identifies customers likely to churn, enabling proactive retention interventions. Key performance indicators include:
 
-**Financial Features (2 features):**
-- `MonthlyCharges`: Monthly billing amount
-- `TotalCharges`: Total amount charged to customer
+- **Primary KPI:** AUC-ROC > 80% for robust model discrimination
+- **Secondary KPIs:** Balanced precision and recall for practical deployment
+- **Business Impact:** Enable targeted retention campaigns with acceptable false positive rates
+- **Expected Outcome:** Provide actionable customer risk scores and feature importance insights
 
-**Target Variable:**
-- `Churn`: Customer churn status (Yes/No)
+### Scope
 
-## �🌟 Portfolio Highlights
+This binary classification problem focuses on predicting customer churn (Yes/No) using customer demographic, service, account, and financial data. The analysis encompasses the complete machine learning pipeline from data exploration through model deployment, utilizing 7,043 customer records with 20 predictive features.
 
-### 🎯 Key Achievements
-- **83.26% AUC-ROC Score** on test set with CatBoost model
-- **13 Professional EDA Visualizations** showcasing data storytelling skills
-- **12 Baseline Models** implemented and compared systematically
-- **Advanced Hyperparameter Tuning** with GridSearchCV and RandomizedSearchCV
-- **Comprehensive Model Evaluation** with 5-fold stratified cross-validation
+### Dataset Details
 
-### 🛠️ Technical Skills Demonstrated
-- **Data Science**: EDA, Feature Engineering, Statistical Analysis
-- **Machine Learning**: Classification, Ensemble Methods, Hyperparameter Tuning
-- **Data Visualization**: Matplotlib, Seaborn, Professional Chart Design
-- **Software Engineering**: Clean Code, Git Workflow, Documentation
-- **Model Evaluation**: Cross-validation, Performance Metrics, Error Analysis
+**Source & License:** [Kaggle Telco Customer Churn Dataset](https://www.kaggle.com/datasets/blastchar/telco-customer-churn)  
+**License:** CC BY-SA 4.0 (Creative Commons)
 
-### 📊 Business Impact
-- **Customer Retention**: Identify at-risk customers before they churn
-- **Revenue Protection**: Potential to save 15-20% annual revenue loss
-- **Marketing Optimization**: Target retention campaigns efficiently
-- **Data-Driven Decisions**: Quantifiable insights for business strategy
+| Attribute | Value |
+|-----------|-------|
+| **Total Records** | 7,043 customers |
+| **Features** | 20 predictive features + 1 target |
+| **Target Distribution** | 73.5% No Churn, 26.5% Churn |
+| **Data Quality** | 11 missing values (0.16%) in TotalCharges |
+| **Final Dataset** | 7,032 customers after cleaning |
 
-## 📂 Project Structure
-```
-📁 Telco Customer Churn Prediction/
-├── 📄 README.md                           # Project documentation
-├── 📄 requirements.txt                    # Python dependencies
-├── 📄 Telco_Customer_kaggle.csv           # Original dataset
-├── 📄 .gitignore                          # Git ignore configuration
-│
-├── 📁 Data/                               # Data pipeline
-│   ├── 📁 input/                          # Raw dataset storage
-│   │   └── Telco_Customer_kaggle.csv      # Original dataset copy
-│   ├── 📁 interim/                        # Intermediate processed data
-│   │   ├── telco_clean.csv                # Cleaned dataset
-│   │   ├── feature_engineered_train_*.csv  # Feature engineering results
-│   │   ├── test_engineered.csv            # Test set with features
-│   │   └── *.pkl                          # Trained model artifacts
-│   └── 📁 output/                         # Final processed datasets
-│       ├── train.csv                      # Training data
-│       ├── test.csv                       # Test data
-│       ├── feature_engineered_train.csv   # Engineered training features
-│       ├── feature_selection_summary.csv  # Feature selection results
-│       ├── final_model.pkl                # Best performing model
-│       └── final_model_metadata.json      # Model performance metadata
-│
-├── 📁 EDA_Analysis/                       # ✅ Exploratory Data Analysis
-│   ├── 01_dataset_exploration.ipynb       # Data cleaning & initial exploration
-│   └── 02_eda_visuals.ipynb              # 13 professional visualizations
-│
-├── 📁 Feature_Engineering/                # ✅ Feature Engineering
-│   └── feature_engineering.ipynb          # Advanced feature creation & selection
-│
-├── 📁 Models/                             # ✅ Machine Learning Models
-│   ├── baseline_models.ipynb              # 6 baseline algorithms comparison
-│   ├── hyperparameter_tuning_final_model_selection.ipynb # Model optimization
-│   ├── final_model.ipynb                  # Final model training & evaluation
-│   ├── test_other_model.ipynb             # Additional model experiments
-│   ├── error_analysis.ipynb               # Model error analysis & insights
-│   ├── best_model_hypertuned.pkl          # Optimized model artifact
-│   └── catboost_info/                     # CatBoost training logs
-│
-├── 📁 Results/                            # ✅ Analysis Results & Outputs
-│   ├── 📁 figures/                        # Visualization outputs
-│   │   ├── eda/                          # EDA visualization collection (13 charts)
-│   │   └── model/                        # Model performance visualizations
-│   └── 📁 reports/                       # Analysis summaries
-│       ├── baseline_models_results.csv   # Detailed model performance
-│       ├── baseline_models_summary.csv   # Model comparison summary
-│       └── top_3_baseline_models.csv     # Best performing models
-│
-└── 📁 .github/                           # GitHub Integration
-    └── workflows/
-        └── ci.yml                        # Continuous integration workflow
-```
+#### Data Dictionary
 
-## 🔍 Key Features Analyzed
-### 👥 **Demographics**
-- Gender distribution, senior citizen status, partner relationships, dependents
+| Feature | Type | Description | Example Values |
+|---------|------|-------------|----------------|
+| **customerID** | String | Unique customer identifier | "7590-VHVEG" |
+| **gender** | Categorical | Customer gender | Male, Female |
+| **SeniorCitizen** | Binary | Senior citizen status | 0, 1 |
+| **Partner** | Categorical | Has partner | Yes, No |
+| **Dependents** | Categorical | Has dependents | Yes, No |
+| **tenure** | Numeric | Months with company | 1-72 |
+| **PhoneService** | Categorical | Phone service subscription | Yes, No |
+| **MultipleLines** | Categorical | Multiple phone lines | Yes, No, No phone service |
+| **InternetService** | Categorical | Internet service type | DSL, Fiber optic, No |
+| **OnlineSecurity** | Categorical | Online security service | Yes, No, No internet service |
+| **OnlineBackup** | Categorical | Online backup service | Yes, No, No internet service |
+| **DeviceProtection** | Categorical | Device protection service | Yes, No, No internet service |
+| **TechSupport** | Categorical | Technical support service | Yes, No, No internet service |
+| **StreamingTV** | Categorical | TV streaming service | Yes, No, No internet service |
+| **StreamingMovies** | Categorical | Movie streaming service | Yes, No, No internet service |
+| **Contract** | Categorical | Contract term | Month-to-month, One year, Two year |
+| **PaperlessBilling** | Categorical | Paperless billing preference | Yes, No |
+| **PaymentMethod** | Categorical | Payment method | Electronic check, Mailed check, Bank transfer, Credit card |
+| **MonthlyCharges** | Numeric | Monthly charges in dollars | $18.25 - $118.75 |
+| **TotalCharges** | Numeric | Total charges to date | $18.8 - $8684.8 |
+| **Churn** | Binary | Target variable | Yes, No |
 
-### 📞 **Service Portfolio** 
-- Phone services, internet types (DSL/Fiber/None), streaming services
-- Security features, backup services, device protection, tech support
+---
 
-### 💳 **Account Management**
-- Contract types (Month-to-month, One year, Two year)
-- Payment methods, billing preferences, customer tenure
+## Part II – Exploratory Data Analysis (EDA)
 
-### 💰 **Financial Metrics**
-- Monthly charges, total charges, pricing patterns by service combinations
+### Dataset Composition & Metadata
 
-## 🎯 Complete ML Pipeline - Key Achievements
+The dataset comprises a balanced mix of feature types enabling comprehensive analysis:
 
-### 📊 **Phase 1: Exploratory Data Analysis (EDA) - ✅ COMPLETED**
-**13 Professional Visualizations Created** following Python Graph Gallery standards:
+- **Categorical Features:** 16 features (80%)
+- **Numeric Features:** 4 features (20%)
+- **Data Types:** 17 object, 3 numeric (after preprocessing)
+- **Memory Usage:** Optimized through appropriate type conversions
+- **No Duplicates:** All 7,043 customerIDs are unique
 
-1. **01_gender_distribution.png** - Gender distribution analysis
-2. **02_contract_vs_churn.png** - Contract type impact on churn  
-3. **03_internet_service_vs_churn.png** - Internet service churn patterns
-4. **04_payment_method_distribution.png** - Payment method preferences
-5. **05_comprehensive_numeric_analysis.png** - Complete numeric variable analysis
-6. **06_monthly_charges_by_churn.png** - Pricing impact on churn
-7. **07_comprehensive_scatter_regression.png** - Variable relationships
-8. **08_bubble_plot_tenure_charges_churn.png** - Multi-dimensional churn analysis
-9. **09_pairplot_numeric_variables.png** - Numeric variables correlation matrix
-10. **10_comprehensive_heatmaps.png** - Categorical-numeric relationships
+### Key Findings
+
+**Churn Distribution:**
+- Overall churn rate: 26.5% (1,869 churned customers)
+- Class imbalance handled through stratified sampling
+
+**Tenure Analysis:**
+- Critical risk period: First 5 months (highest churn probability)
+- Longer tenure correlates with higher retention rates
+- Mean tenure: 32 months for retained vs. 18 months for churned customers
+
+**Financial Patterns:**
+- Churned customers pay 23% higher monthly charges ($80.19 vs. $65.02)
+- Total charges are lower for churned customers due to shorter tenure
+- Month-to-month contracts show highest churn rates (42.7%)
+
+**Service Correlations:**
+- Security services significantly reduce churn risk (15.3% vs. 41.8%)
+- Fiber optic customers show concerning 40.6% churn rate
+- Phone service adoption has minimal impact on churn rates
+
+### Visualization Portfolio
+
+The EDA phase generated 13 professional visualizations saved in `Results/figures/eda/`:
+
+1. **01_gender_distribution.png** - Balanced gender distribution analysis
+2. **02_contract_vs_churn.png** - Contract type impact revealing month-to-month risk
+3. **03_internet_service_vs_churn.png** - Fiber optic service churn patterns
+4. **04_payment_method_distribution.png** - Payment method preferences and churn correlation
+5. **05_comprehensive_numeric_analysis.png** - Complete numeric variable distributions
+6. **06_monthly_charges_by_churn.png** - Pricing impact on customer retention
+7. **07_comprehensive_scatter_regression.png** - Multi-variate relationship analysis
+8. **08_bubble_plot_tenure_charges_churn.png** - Three-dimensional churn analysis
+9. **09_pairplot_numeric_variables.png** - Numeric variable correlation matrix
+10. **10_comprehensive_heatmaps.png** - Categorical-numeric relationship mapping
 11. **11_additional_churn_analysis.png** - Comprehensive churn dashboard
-12. **12_services_churn_analysis.png** - Service features impact analysis
-13. **13_comprehensive_correlation_analysis.png** - Complete feature correlation
+12. **12_services_churn_analysis.png** - Service feature impact analysis
+13. **13_comprehensive_correlation_analysis.png** - Complete feature correlation study
 
-### 🔧 **Phase 2: Feature Engineering - ✅ COMPLETED**
-- **Advanced Feature Creation**: Domain-specific feature engineering
-- **Feature Selection**: Statistical significance testing and correlation analysis
-- **Data Preprocessing**: Scaling, encoding, and transformation pipelines
-- **Feature Validation**: Cross-validation and stability testing
+### Data Quality Issues & Fixes
 
-### 🤖 **Phase 3: Baseline Model Development - ✅ COMPLETED**
-**12 Machine Learning Algorithms Evaluated**:
-1. **Logistic Regression** - Linear classification baseline
-2. **Decision Tree** - Tree-based classifier
-3. **Random Forest** - Ensemble bagging method
-4. **XGBoost** - Gradient boosting framework
-5. **LightGBM** - Microsoft's gradient boosting
-6. **CatBoost** - Yandex's gradient boosting
-7. **Support Vector Classifier (SVC)** - Kernel-based classification
-8. **Naive Bayes** - Probabilistic classifier
-9. **K-Nearest Neighbors (KNN)** - Instance-based learning
-10. **Gradient Boosting** - Scikit-learn's gradient boosting
-11. **AdaBoost** - Adaptive boosting ensemble
-12. **Extra Trees** - Extremely randomized trees
+**Issues Identified:**
+1. TotalCharges stored as object type with 11 missing values represented as spaces
+2. No duplicate records detected
+3. All categorical variables properly encoded
 
-**Evaluation Methodology**:
-- 5-fold stratified cross-validation for robust performance estimation
-- Comprehensive metrics: Accuracy, Precision, Recall, AUC-ROC
-- Performance consistency analysis (standard deviation across folds)
-- Professional visualizations showing model rankings and distributions
+**Solutions Applied:**
+1. Converted TotalCharges to numeric, handling errors gracefully
+2. Removed 11 rows with missing TotalCharges (0.16% of data)
+3. Performed stratified train-test split (80/20) preserving class distribution
+4. Saved cleaned dataset for downstream processing
 
-### 🎯 **Phase 4: Hyperparameter Tuning - ✅ COMPLETED**
-**Top 3 Models Selected for Optimization**:
-- **Gradient Boosting Classifier** - AUC-ROC: 0.8412 (after tuning)
-- **CatBoost Classifier** - AUC-ROC: 0.8420 (after tuning) ⭐ **WINNER**
-- **AdaBoost Classifier** - AUC-ROC: 0.8371 (after tuning)
+---
 
-**Optimization Techniques Applied**:
-- **GridSearchCV**: Exhaustive search over parameter grids
-- **RandomizedSearchCV**: Efficient parameter space exploration (10 iterations)
-- **5-Fold Stratified Cross-Validation**: Robust performance estimation
-- **AUC-ROC Primary Metric**: Optimized for class imbalance handling
-- **Computational Efficiency**: Time tracking for practical deployment considerations
+## Part III – Feature Engineering
 
-**Hyperparameter Search Spaces**:
-- **Gradient Boosting**: n_estimators, learning_rate, max_depth, min_samples_split, min_samples_leaf
-- **CatBoost**: iterations, learning_rate, depth, l2_leaf_reg (with categorical feature optimization)
-- **AdaBoost**: n_estimators, learning_rate, algorithm combinations
+### Engineered Features
 
-### 🏆 **Phase 5: Final Model Evaluation - ✅ COMPLETED**
-**CatBoost Final Model Performance on Test Set**:
-- **Test Accuracy**: 79.46%
-- **Precision**: 65.92% (2 out of 3 predicted churners are actual churners)
-- **Recall**: 47.06% (nearly half of actual churners correctly identified)
-- **F1-Score**: 54.91% (balanced precision-recall performance)
-- **AUC-ROC**: 83.26% (excellent discriminative power)
+The feature engineering process enhanced the original dataset through domain-specific transformations:
 
-**Model Selection Rationale**:
-- **Highest AUC-ROC**: CatBoost achieved the best discriminative performance
-- **Categorical Feature Handling**: Native support for categorical variables without encoding
-- **Training Efficiency**: Faster convergence compared to other gradient boosting methods
-- **Robustness**: Consistent performance across cross-validation folds
-- **Business Suitability**: Balance between precision and recall appropriate for churn prediction
+**Tenure Segmentation:**
+- Created tenure groups (New: 0-12 months, Established: 13-36 months, Loyal: 37+ months)
+- Rationale: Customer behavior varies significantly across lifecycle stages
 
-**Performance Interpretation**:
-- **Strong AUC-ROC (83.26%)**: Model effectively ranks potential churners
-- **Moderate Precision (65.92%)**: Acceptable false positive rate for marketing campaigns
-- **Moderate Recall (47.06%)**: Captures nearly half of actual churners, room for improvement
-- **Business Impact**: Cost-effective for targeted retention with manageable campaign costs
+**Contract Encoding:**
+- Ordinal encoding for contract duration (Month-to-month=0, One year=1, Two year=2)
+- Rationale: Captures progressive commitment levels affecting churn propensity
 
-### 🔬 **Phase 6: Advanced Analysis - ✅ COMPLETED**
-- **Ensemble Methods**: Voting classifiers and stacking
-- **Error Analysis**: Model debugging and performance optimization
-- **Business Impact Assessment**: Cost-benefit analysis for deployment
+**Service Bundling Features:**
+- Total services count per customer
+- Premium services indicator (security, backup, protection)
+- Rationale: Service bundling typically reduces churn through increased switching costs
 
-### 💡 **Critical Business Insights Discovered**
-- **Contract Type**: Strongest churn predictor (-0.400 correlation)
-- **Early Tenure Risk**: 0-5 months is critical retention period  
-- **Price Sensitivity**: Churned customers pay 23% more monthly ($80.19 vs $65.02)
-- **Security Services**: Significantly reduce churn risk (15.3% vs 41.8% churn rate)
-- **Family Loyalty**: Partners/dependents show higher retention (19.7% vs 32.9% churn)
-- **Fiber Optic Challenge**: Concerning 40.6% churn rate despite premium pricing
+**Financial Metrics:**
+- Average monthly charges (TotalCharges / tenure)
+- Charge-to-tenure ratio for recent customers
+- Rationale: Identifies pricing sensitivity patterns
 
-### 📊 **Statistical Analysis Completed**
-- **Correlation Analysis**: Complete feature correlation matrix
-- **Distribution Analysis**: Comprehensive univariate and bivariate statistics
-- **Churn Pattern Recognition**: Multi-dimensional churn behavior analysis
-- **Business Intelligence**: Actionable insights for retention strategies
+**Categorical Encoding:**
+- One-hot encoding for nominal categories
+- Label encoding for ordinal variables
+- Binary encoding for Yes/No variables
 
-## 🚀 How to Run the Complete ML Pipeline
+### Pre-processing Pipeline Summary
 
-### ✅ Prerequisites
-- **Python 3.8+** (Tested with Python 3.13.3)
-- **Git** (optional, for cloning)
-- **Jupyter Notebook** or **VS Code** with Python extension
-- **Minimum 4GB RAM** (8GB recommended for model training)
-- **2GB disk space** for data and models
+```python
+# Core preprocessing steps implemented:
+1. Missing value imputation (TotalCharges conversion)
+2. Feature scaling using StandardScaler for numeric features
+3. Categorical encoding (One-hot for nominal, Label for ordinal)
+4. Feature selection based on correlation analysis
+5. Stratified train-test split preservation
+```
 
-### 🛠️ Setup Instructions
+**Pipeline Components:**
+- **Data Cleaning:** Handled missing values and type conversions
+- **Feature Creation:** Domain-specific engineered features
+- **Encoding:** Appropriate transformations for ML algorithms
+- **Scaling:** Standardization for distance-based algorithms
+- **Validation:** Stratified splitting maintaining class balance
 
-1. **📥 Clone or download this repository**
-   ```bash
-   # If cloning from GitHub
-   git clone https://github.com/yourusername/telco-churn-prediction.git
-   cd telco-churn-prediction
-   
-   # Or download ZIP and extract
-   # Then navigate to the project directory
-   cd "DAS 601 ML Final Project"
-   ```
+---
 
-2. **🐍 Create and activate virtual environment**
-   ```bash
-   # Create virtual environment
-   python -m venv .venv
-   
-   # Activate on Windows (Command Prompt):
-   .venv\Scripts\activate.bat
-   
-   # Activate on Windows (PowerShell):
-   .venv\Scripts\Activate.ps1
-   
-   # Activate on macOS/Linux:
-   source .venv/bin/activate
-   ```
+## Part IV – Model Selection
 
-3. **📦 Install required packages**
-   ```bash
-   pip install -r requirements.txt
-   ```
+### Candidate Algorithms
 
-4. **📊 Verify data placement**
-   - Ensure `Telco_Customer_kaggle.csv` is in the root directory
-   - The setup will automatically organize data into proper directories
+Twelve classification algorithms were systematically evaluated using 5-fold stratified cross-validation:
 
-### ▶️ Execution Order - Complete ML Pipeline
+| Algorithm Category | Model | Rationale |
+|-------------------|-------|-----------|
+| **Linear Models** | Logistic Regression | Baseline interpretable model |
+| **Tree-Based** | Decision Tree | Interpretable non-linear model |
+| **Tree-Based** | Random Forest | Ensemble bagging approach |
+| **Tree-Based** | Extra Trees | Randomized ensemble variant |
+| **Boosting** | XGBoost | Gradient boosting framework |
+| **Boosting** | LightGBM | Microsoft's efficient boosting |
+| **Boosting** | CatBoost | Categorical feature optimization |
+| **Boosting** | Gradient Boosting | Scikit-learn implementation |
+| **Boosting** | AdaBoost | Adaptive boosting ensemble |
+| **Instance-Based** | K-Nearest Neighbors | Non-parametric approach |
+| **Probabilistic** | Naive Bayes | Probabilistic classifier |
+| **Kernel-Based** | Support Vector Classifier | Non-linear decision boundaries |
 
-Run the notebooks in the following sequence for the complete machine learning pipeline:
+### Hyperparameter Tuning Approach
 
-#### **Phase 1: Exploratory Data Analysis**
+**Top 3 Models Selected for Optimization:**
+1. **Gradient Boosting Classifier** (Baseline AUC-ROC: 0.8390)
+2. **CatBoost Classifier** (Baseline AUC-ROC: 0.8356)
+3. **AdaBoost Classifier** (Baseline AUC-ROC: 0.8345)
+
+**Optimization Strategy:**
+- **Primary Technique:** GridSearchCV for exhaustive parameter search
+- **Secondary Technique:** RandomizedSearchCV for efficiency (10 iterations)
+- **Cross-Validation:** 5-fold stratified CV for robust evaluation
+- **Scoring Metric:** AUC-ROC optimized for class imbalance handling
+- **Computational Tracking:** Time monitoring for practical deployment considerations
+
+**Search Spaces Defined:**
+```python
+# Gradient Boosting Parameters
+gb_params = {
+    'n_estimators': [100, 200],
+    'learning_rate': [0.05, 0.1, 0.2],
+    'max_depth': [3, 5, 7],
+    'min_samples_split': [2, 5],
+    'min_samples_leaf': [1, 2]
+}
+
+# CatBoost Parameters
+cb_params = {
+    'iterations': [100, 200],
+    'learning_rate': [0.05, 0.1, 0.2],
+    'depth': [4, 6, 8],
+    'l2_leaf_reg': [1, 3, 5]
+}
+
+# AdaBoost Parameters
+ada_params = {
+    'n_estimators': [50, 100, 200],
+    'learning_rate': [0.5, 1.0, 1.5],
+    'algorithm': ['SAMME', 'SAMME.R']
+}
+```
+
+### Final Model Choice & Justification
+
+**Selected Model:** CatBoost Classifier
+
+**Justification Criteria:**
+1. **Highest AUC-ROC:** Achieved 84.20% after hyperparameter tuning
+2. **Categorical Feature Optimization:** Native handling of categorical variables without extensive preprocessing
+3. **Training Efficiency:** Faster convergence compared to other gradient boosting methods
+4. **Robustness:** Consistent performance across cross-validation folds
+5. **Business Suitability:** Balanced precision-recall trade-off appropriate for churn prediction costs
+
+---
+
+## Part V – Model Evaluation
+
+### Performance Metrics Table
+
+| Metric | Value | Business Interpretation |
+|--------|-------|------------------------|
+| **Accuracy** | 79.46% | Nearly 4 out of 5 predictions are correct |
+| **Precision** | 65.92% | 2 out of 3 predicted churners are actual churners |
+| **Recall** | 47.06% | Nearly half of actual churners are correctly identified |
+| **F1-Score** | 54.91% | Balanced precision-recall performance |
+| **AUC-ROC** | 83.26% | Excellent discriminative power for ranking customers |
+
+### Baseline Model Comparison
+
+Top performing models from 12-algorithm evaluation:
+
+| Rank | Model | AUC-ROC | Accuracy | Precision | Recall |
+|------|-------|---------|----------|-----------|--------|
+| 1 | **CatBoost** | **83.56%** | **79.09%** | **63.94%** | **49.03%** |
+| 2 | Gradient Boosting | 83.90% | 79.16% | 63.92% | 49.50% |
+| 3 | AdaBoost | 83.45% | 78.84% | 63.24% | 48.83% |
+| 4 | LightGBM | 82.42% | 78.12% | 60.88% | 49.57% |
+| 5 | Logistic Regression | 82.17% | 78.88% | 65.36% | 43.75% |
+
+### Confusion Matrix Analysis
+
+The final CatBoost model's confusion matrix reveals:
+- **True Negatives:** Strong performance in correctly identifying non-churners
+- **True Positives:** Moderate success in identifying actual churners
+- **False Positives:** Acceptable rate for marketing campaign costs
+- **False Negatives:** Room for improvement in capturing all churners
+
+### Business Interpretation
+
+**Model Strengths:**
+- **High AUC-ROC (83.26%):** Excellent ability to rank customers by churn probability
+- **Moderate Precision (65.92%):** Acceptable false positive rate for targeted campaigns
+- **Balanced Performance:** Reasonable trade-off between precision and recall
+
+**Business Applications:**
+- **Customer Scoring:** Rank all customers by churn probability for prioritized outreach
+- **Campaign Targeting:** Focus retention efforts on top 20% highest-risk customers
+- **Resource Allocation:** Cost-effective deployment with manageable false positive rates
+- **Performance Monitoring:** Track model degradation through production metrics
+
+**Limitations:**
+- **Recall Opportunity:** Model captures only 47% of actual churners, missing 53%
+- **Class Imbalance:** May benefit from cost-sensitive learning approaches
+- **Feature Drift:** Requires monitoring for changing customer behavior patterns
+
+---
+
+## Conclusion & Future Work
+
+The developed CatBoost model successfully demonstrates the application of machine learning for customer churn prediction, achieving strong discriminative performance with 83.26% AUC-ROC. The comprehensive pipeline from data exploration through model deployment provides a robust foundation for business deployment. Key insights include the critical importance of contract type, tenure patterns, and service bundling in churn prediction. While the model shows excellent ranking capability, the moderate recall suggests opportunities for cost-sensitive optimization in future iterations.
+
+**Future Work Opportunities:**
+
+• **Enhanced Feature Engineering:** Incorporate temporal patterns, customer interaction history, and competitive market data
+• **Cost-Sensitive Learning:** Implement class weights and custom loss functions reflecting business costs of false negatives vs false positives
+• **Ensemble Methods:** Develop stacking or blending approaches combining multiple algorithm strengths
+• **Real-Time Deployment:** Design streaming prediction pipeline with model monitoring and drift detection
+• **Deep Learning Exploration:** Investigate neural networks for complex pattern recognition in larger datasets
+• **Causal Inference:** Implement causal modeling to understand intervention effects rather than correlation-based predictions
+• **Multi-Objective Optimization:** Balance multiple business objectives including customer lifetime value and retention costs
+
+---
+
+## Repository Usage
+
+### Environment Setup
+
+**Prerequisites:**
+- Python 3.8+ (tested with Python 3.13.3)
+- 4GB+ RAM (8GB recommended for model training)
+- 2GB disk space for data and models
+
+**Installation:**
 ```bash
-# Using Jupyter Notebook
+# Clone repository
+git clone https://github.com/fahimvj/telco-customer-churn-prediction.git
+cd telco-customer-churn-prediction
+
+# Create virtual environment
+python -m venv .venv
+
+# Activate environment (Windows)
+.venv\Scripts\activate.bat
+
+# Activate environment (macOS/Linux)
+source .venv/bin/activate
+
+# Install dependencies
+pip install -r requirements.txt
+```
+
+### Reproduction Instructions
+
+**Complete Pipeline Execution:**
+```bash
+# Step 1: Data Exploration & Cleaning
 jupyter notebook EDA_Analysis/01_dataset_exploration.ipynb
+
+# Step 2: Comprehensive EDA Visualizations
 jupyter notebook EDA_Analysis/02_eda_visuals.ipynb
 
-# Using VS Code: Open and run cells in sequence
-```
-
-#### **Phase 2: Feature Engineering**  
-```bash
-# Run feature engineering notebook
+# Step 3: Feature Engineering
 jupyter notebook Feature_Engineering/feature_engineering.ipynb
-```
 
-#### **Phase 3: Baseline Model Development**
-```bash
-# Compare 6 different machine learning algorithms
+# Step 4: Baseline Model Comparison
 jupyter notebook Models/baseline_models.ipynb
-```
 
-#### **Phase 4: Hyperparameter Tuning & Model Selection**
-```bash
-# Optimize top performing models
+# Step 5: Hyperparameter Tuning
 jupyter notebook Models/hyperparameter_tuning_final_model_selection.ipynb
-```
 
-#### **Phase 5: Final Model Evaluation**
-```bash
-# Train and evaluate the final CatBoost model
+# Step 6: Final Model Evaluation
 jupyter notebook Models/final_model.ipynb
 ```
 
-#### **Phase 6: Advanced Analysis (Optional)**
+**Automated Execution:**
 ```bash
-# Additional analysis and experiments
-jupyter notebook Models/test_other_model.ipynb      # Additional model testing
-jupyter notebook Models/error_analysis.ipynb       # Model error analysis
+# Run complete pipeline with consistent random seed
+python -c "
+import subprocess
+notebooks = [
+    'EDA_Analysis/01_dataset_exploration.ipynb',
+    'EDA_Analysis/02_eda_visuals.ipynb', 
+    'Feature_Engineering/feature_engineering.ipynb',
+    'Models/baseline_models.ipynb',
+    'Models/hyperparameter_tuning_final_model_selection.ipynb',
+    'Models/final_model.ipynb'
+]
+for nb in notebooks:
+    subprocess.run(['jupyter', 'nbconvert', '--to', 'notebook', '--execute', nb])
+"
 ```
 
-### 🎯 Quick Start - Run Everything
-If you want to execute the complete pipeline:
-
-```bash
-# 1. Activate environment
-.venv\Scripts\activate.bat  # Windows Command Prompt
-# .venv\Scripts\Activate.ps1  # Windows PowerShell
-# source .venv/bin/activate  # macOS/Linux
-
-# 2. Install dependencies  
-pip install -r requirements.txt
-
-# 3. Run complete pipeline
-jupyter notebook  # Then open and run notebooks in the order above
-```
-
-### 📊 Alternative: VS Code Setup
-```bash
-# 1. Open VS Code in project directory
-code .
-
-# 2. Select Python interpreter
-# Ctrl+Shift+P -> "Python: Select Interpreter" -> Choose .venv/Scripts/python.exe
-
-# 3. Open notebooks and run cells in sequence
-# Start with EDA_Analysis/01_dataset_exploration.ipynb
-```
-
-## 📈 Results Summary
-
-### 🏆 Final Model Performance
-**CatBoost Classifier** achieved the best performance:
-- **Test Accuracy**: 79.46%
-- **AUC-ROC**: 83.26%
-- **Precision**: 65.92%
-- **Recall**: 47.06%
-- **F1-Score**: 54.91%
-
-### 📊 Model Comparison Results
-**12 Baseline Models Evaluated**:
-1. **CatBoost** - AUC-ROC: 83.56% (baseline), 84.20% (tuned) ⭐ **Best**
-2. **Gradient Boosting** - AUC-ROC: 83.90% (baseline), 84.12% (tuned)
-3. **AdaBoost** - AUC-ROC: 83.45% (baseline), 83.71% (tuned)
-4. **LightGBM** - AUC-ROC: 82.42% (baseline)
-5. **Logistic Regression** - AUC-ROC: 82.17% (baseline)
-6. **XGBoost** - AUC-ROC: 81.77% (baseline)
-7. **Random Forest** - AUC-ROC: 80.38% (baseline)
-8. **Extra Trees** - AUC-ROC: 78.21% (baseline)
-9. **K-Nearest Neighbors** - AUC-ROC: 74.08% (baseline)
-10. **Naive Bayes** - AUC-ROC: 72.80% (baseline)
-11. **Decision Tree** - AUC-ROC: 65.88% (baseline)
-12. **Support Vector Classifier** - AUC-ROC: 57.39% (baseline)
-
-### 💡 Key Business Insights
-- **Contract Type**: Strongest predictor of churn
-- **Tenure**: First 5 months are critical for retention
-- **Pricing**: Churned customers pay 23% higher monthly charges
-- **Services**: Security add-ons significantly reduce churn risk
-- **Internet Type**: Fiber optic customers show higher churn rates
-
-## 🔗 Git & GitHub Integration
-
-### 📋 Prerequisites for Git Setup
-- **Git installed** on your system ([Download Git](https://git-scm.com/downloads))
-- **GitHub account** ([Create account](https://github.com/signup))
-- **VS Code** with Git extension (usually pre-installed)
-
-### 🚀 Initial Repository Setup
-
-#### **Option 1: Create New Repository from VS Code**
-
-1. **📁 Initialize Git Repository**
-   ```bash
-   # Navigate to your project directory
-   cd "DAS 601 ML Final Project"
-   
-   # Initialize Git repository
-   git init
-   
-   # Configure Git (first time only)
-   git config --global user.name "Your Name"
-   git config --global user.email "your.email@example.com"
-   ```
-
-2. **📝 Create .gitignore file** (automatically excludes unnecessary files)
-   ```bash
-   # The .gitignore file is automatically created (see below)
-   ```
-
-3. **🔗 Connect to GitHub via VS Code**
-   - Open VS Code in your project directory
-   - Press `Ctrl+Shift+P` and search "Git: Initialize Repository"
-   - Go to Source Control panel (`Ctrl+Shift+G`)
-   - Click "Publish to GitHub"
-   - Choose "Publish to GitHub public repository"
-   - Name your repository: `telco-churn-prediction-ml`
-
-#### **Option 2: Clone Existing Repository**
-
-```bash
-# Clone the repository
-git clone https://github.com/yourusername/telco-churn-prediction-ml.git
-cd telco-churn-prediction-ml
-
-# Set up your environment
-python -m venv .venv
-.venv\Scripts\activate  # Windows
-pip install -r requirements.txt
-```
-
-### 🔧 VS Code Git Integration Workflow
-
-#### **Daily Git Workflow in VS Code**
-
-1. **📝 Stage Changes**
-   - Open Source Control panel (`Ctrl+Shift+G`)
-   - Review changed files
-   - Click `+` next to files to stage them
-   - Or stage all changes with `Ctrl+Shift+A`
-
-2. **💾 Commit Changes**
-   - Write commit message in the text box
-   - Press `Ctrl+Enter` or click ✓ to commit
-   - Use conventional commit format:
-     ```
-     feat: add baseline model evaluation
-     fix: resolve CatBoost model fitting issue
-     docs: update README with results
-     data: add feature engineered datasets
-     ```
-
-3. **🚀 Push to GitHub**
-   - Click "..." menu in Source Control
-   - Select "Push" or press `Ctrl+Shift+P` then "Git: Push"
-   - Or use sync button (↑↓) to pull and push
-
-#### **Command Line Git Workflow**
-
-```bash
-# Check status
-git status
-
-# Add files
-git add .                          # Add all files
-git add Models/final_model.ipynb   # Add specific file
-
-# Commit changes
-git commit -m "feat: complete final model evaluation"
-
-# Push to GitHub
-git push origin main
-
-# Pull latest changes
-git pull origin main
-
-# Create and switch to new branch
-git checkout -b feature/ensemble-models
-git push -u origin feature/ensemble-models
-```
-
-### 📁 Project Files for Git Integration
-
-#### **Automated .gitignore Creation**
-A `.gitignore` file will be created to exclude:
-
-```gitignore
-# Python
-__pycache__/
-*.py[cod]
-*$py.class
-*.so
-.Python
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-*.egg-info/
-.installed.cfg
-*.egg
-MANIFEST
-
-# Virtual Environment
-.venv/
-env/
-ENV/
-.env
-
-# Jupyter Notebook
-.ipynb_checkpoints
-*/.ipynb_checkpoints/*
-
-# IDE
-.vscode/settings.json
-.idea/
-*.swp
-*.swo
-
-# OS
-.DS_Store
-Thumbs.db
-
-# Large Data Files (keep samples only)
-*.csv
-!sample_data.csv
-*.pkl
-!final_model.pkl
-
-# Model artifacts (optional - you may want to track these)
-# *.pkl
-# *.joblib
-
-# Results (optional - you may want to track visualizations)
-# Results/figures/*.png
-```
-
-### 🔐 GitHub Repository Settings
-
-#### **Repository Structure on GitHub**
-```
-📁 telco-churn-prediction-ml/
-├── 📄 README.md
-├── 📄 requirements.txt
-├── 📄 .gitignore
-├── 📄 LICENSE (optional)
-├── 📁 .github/
-│   └── 📁 workflows/
-│       └── ci.yml (optional - for automated testing)
-├── 📁 Data/
-├── 📁 EDA_Analysis/
-├── 📁 Feature_Engineering/
-├── 📁 Models/
-└── 📁 Results/
-```
-
-#### **Recommended Repository Settings**
-- **Repository Name**: `telco-churn-prediction-ml`
-- **Description**: "Complete ML pipeline for telecommunications customer churn prediction using CatBoost, featuring EDA, feature engineering, and model optimization"
-- **Topics**: `machine-learning`, `churn-prediction`, `catboost`, `data-science`, `telecommunications`, `python`, `jupyter`
-- **License**: MIT License (recommended for academic projects)
-
-### 🚀 VS Code Extensions for Git
-
-Install these VS Code extensions for better Git integration:
-
-```bash
-# Install via VS Code Extensions Marketplace
-# Or via command line:
-code --install-extension ms-vscode.vscode-git-graph
-code --install-extension eamodio.gitlens
-code --install-extension github.vscode-pull-request-github
-```
-
-**Recommended Extensions:**
-- **GitLens** - Supercharge Git capabilities
-- **Git Graph** - View Git repository graph
-- **GitHub Pull Requests** - GitHub integration
-- **Git History** - View Git log and file history
-
-### 📊 Collaboration Workflow
-
-#### **For Team Projects**
-```bash
-# Create feature branch
-git checkout -b feature/hyperparameter-tuning
-
-# Work on your feature
-# ... make changes ...
-
-# Commit and push
-git add .
-git commit -m "feat: implement hyperparameter tuning for top 3 models"
-git push -u origin feature/hyperparameter-tuning
-
-# Create Pull Request on GitHub
-# Merge after review
-```
-
-#### **Branch Strategy**
-- `main` - Production-ready code
-- `develop` - Integration branch
-- `feature/model-evaluation` - Feature branches
-- `hotfix/fix-data-loading` - Quick fixes
-
-### 🎯 Step-by-Step VS Code GitHub Integration
-
-#### **First Time Setup (New Project)**
-
-1. **🔧 Open VS Code in your project folder**
-   ```bash
-   cd "DAS 601 ML Final Project"
-   code .
-   ```
-
-2. **🔗 Initialize Git (if not already done)**
-   - Open Terminal in VS Code (`Ctrl+`` `)
-   - Run: `git init`
-   - Configure Git user (first time only):
-     ```bash
-     git config --global user.name "Your Name"
-     git config --global user.email "your.email@example.com"
-     ```
-
-3. **📝 Stage and Commit Initial Files**
-   - Open Source Control panel (`Ctrl+Shift+G`)
-   - You'll see all untracked files
-   - Click "+" next to "Changes" to stage all files
-   - Write commit message: `Initial commit: Complete ML pipeline project`
-   - Click ✓ to commit
-
-4. **🚀 Publish to GitHub**
-   - In Source Control panel, click "Publish to GitHub"
-   - Choose "Publish to GitHub public repository"
-   - Repository name: `telco-churn-prediction-ml`
-   - VS Code will create the repository and push your code
-
-#### **Daily Workflow in VS Code**
-
-1. **📋 Start Working**
-   - Pull latest changes: `Ctrl+Shift+P` → "Git: Pull"
-   - Create new branch (optional): `Ctrl+Shift+P` → "Git: Create Branch"
-
-2. **💻 Make Changes**
-   - Edit your notebooks and code
-   - VS Code shows modified files with "M" indicator
-   - Changes appear in Source Control panel
-
-3. **📝 Commit Changes**
-   - Go to Source Control (`Ctrl+Shift+G`)
-   - Review changes by clicking on files
-   - Stage files with "+" button
-   - Write descriptive commit message
-   - Commit with ✓ or `Ctrl+Enter`
-
-4. **🔄 Sync with GitHub**
-   - Click sync button (↑↓) in status bar
-   - Or use `Ctrl+Shift+P` → "Git: Push"
-
-#### **VS Code Git Features**
-
-- **📊 Git Graph**: View repository history
-- **🔍 GitLens**: See blame annotations and commit info
-- **🌿 Branch Switching**: Click branch name in status bar
-- **📋 Merge Conflicts**: VS Code provides visual merge tools
-- **📝 Commit History**: Right-click files → "Git: View File History"
-
-### 🏷️ Recommended Commit Message Format
-
-Use conventional commits for better organization:
-
-```
-<type>(<scope>): <description>
-
-[optional body]
-
-[optional footer]
-```
-
-**Examples:**
-```bash
-feat(models): add CatBoost hyperparameter tuning
-fix(data): resolve missing value handling in test set
-docs(readme): update installation instructions
-data(output): add feature engineered datasets
-style(notebooks): improve code formatting and comments
-refactor(models): reorganize model evaluation functions
-test(pipeline): add data validation tests
-chore(deps): update requirements.txt versions
-```
-
-**Types:**
-- `feat`: New feature
-- `fix`: Bug fix
-- `docs`: Documentation changes
-- `style`: Code style changes
-- `refactor`: Code refactoring
-- `test`: Adding tests
-- `chore`: Maintenance tasks
-- `data`: Data-related changes
-
-### 📈 Expected Outputs - Complete Pipeline
-After successful execution, you will have:
-
-**📁 Data Outputs:**
-- `Data/interim/telco_clean.csv` - Cleaned dataset (7,032 records)
-- `Data/output/train.csv` - Training set (5,625 records)
-- `Data/output/test.csv` - Test set (1,407 records)
-- `Data/output/feature_engineered_train.csv` - Feature engineered training data
-- `Data/output/feature_engineered_test_wrapper.csv` - Feature engineered test data
-- `Data/output/feature_selection_summary.csv` - Feature analysis results
-
-**🤖 Model Outputs:**
-- `Data/output/final_model.pkl` - Best trained CatBoost model
-- `Data/output/final_model_metadata.json` - Model performance metrics
-- `Models/best_model_hypertuned.pkl` - Backup model file
-
-**🎨 Visualization Portfolio (13 files):**
-- `Results/figures/01_gender_distribution.png`
-- `Results/figures/02_contract_vs_churn.png`
-- `Results/figures/03_internet_service_vs_churn.png`
-- `Results/figures/04_payment_method_distribution.png`
-- `Results/figures/05_comprehensive_numeric_analysis.png`
-- `Results/figures/06_monthly_charges_by_churn.png`
-- `Results/figures/07_comprehensive_scatter_regression.png`
-- `Results/figures/08_bubble_plot_tenure_charges_churn.png`
-- `Results/figures/09_pairplot_numeric_variables.png`
-- `Results/figures/10_comprehensive_heatmaps.png`
-- `Results/figures/11_additional_churn_analysis.png`
-- `Results/figures/12_services_churn_analysis.png`
-- `Results/figures/13_comprehensive_correlation_analysis.png`
-
-**📊 Performance Results:**
-- **Final Model**: CatBoost Classifier
-- **Test Accuracy**: 79.46%
-- **AUC-ROC Score**: 83.26%
-- **Precision**: 65.92%
-- **Recall**: 47.06%
-- **F1-Score**: 54.91%
-
-**📈 Model Comparison Results:**
-- Baseline model performance comparison (6 algorithms)
-- Hyperparameter tuning results (top 3 models)
-- Ensemble method evaluation
-- Feature importance analysis
-
-## 🔧 Dependencies & Technical Stack
-
-### 📚 Core Libraries
-- **pandas** (2.0+): Data manipulation and analysis
-- **numpy** (1.24+): Numerical computing and array operations
-- **matplotlib** (3.7+): Base plotting and visualization framework
-- **seaborn** (0.12+): Advanced statistical visualization
-- **scikit-learn** (1.3+): Machine learning algorithms and utilities
-- **xgboost** (1.7+): Gradient boosting framework
-- **catboost** (1.2+): CatBoost gradient boosting library
-- **jupyter** (1.0+): Interactive notebook environment
-- **joblib** (1.3+): Model serialization and parallel computing
-
-### 🤖 Machine Learning Stack
-- **Classification Algorithms**: KNN, Logistic Regression, Naive Bayes, Random Forest, SVM, XGBoost, CatBoost, AdaBoost
-- **Hyperparameter Tuning**: GridSearchCV, RandomizedSearchCV
-- **Model Evaluation**: Cross-validation, ROC-AUC, Confusion Matrix, Classification Reports
-- **Ensemble Methods**: Voting Classifiers, Stacking
-- **Feature Engineering**: Statistical transformations, encoding, scaling
-
-### 🎨 Visualization Standards
-- **Python Graph Gallery Compliance**: All visualizations follow established best practices
-- **Color Theory**: ColorBrewer schemes for optimal visual perception
-- **Statistical Graphics**: Edward Tufte principles for clear communication
-- **Professional Design**: High-DPI exports suitable for presentations and reports
-
-## 📋 Current Project Status
-
-### ✅ **COMPLETED PHASES**
-
-#### 🔍 **Phase 1: Data Exploration & Cleaning**
-- ✅ Dataset inspection and quality assessment
-- ✅ Missing value identification and handling (11 missing values removed)
-- ✅ Data type conversions and standardization  
-- ✅ Train/test split with stratification (80/20 split)
-- ✅ Data validation and integrity checks
-
-#### 📊 **Phase 2: Exploratory Data Analysis (EDA)**
-- ✅ **13 Professional Visualizations**: Comprehensive visual analysis suite
-- ✅ **Statistical Analysis**: Correlation matrices and relationship mapping  
-- ✅ **Business Insights**: Actionable findings for retention strategies
-- ✅ **Pattern Recognition**: Churn indicators and risk factors identified
-- ✅ **Documentation**: Detailed methodology and results reporting
-
-### � **READY FOR NEXT PHASE**
-
-The project has completed comprehensive exploratory data analysis and is ready for:
-- **Feature Engineering**: Variable transformation and creation
-- **Model Development**: Machine learning algorithm implementation  
-- **Hyperparameter Tuning**: Model optimization
-- **Final Model Selection**: Best performer identification
-
-## 📊 EDA Results Summary
-
-### 🔍 **Data Quality Assessment**
-- **Data Completeness**: 99.84% (11 missing values removed)
-- **Feature Distribution**: Balanced mix of categorical and numeric variables
-- **Target Balance**: ~26.5% churn rate (suitable for classification)
-- **Data Integrity**: No duplicate records, consistent data types
-
-### 📈 **Key Statistical Findings**
-- **Strongest Churn Predictor**: Contract type (r = -0.400)
-- **Critical Risk Period**: First 5 months of customer tenure
-- **Price Impact**: 23% higher monthly charges among churned customers
-- **Service Correlation**: Security services strongly linked to retention
-
-### 🎯 **Business Intelligence Extracted**
-- **High-Risk Segments**: Month-to-month contracts, fiber optic without security
-- **Retention Opportunities**: Early customer engagement, service bundling
-- **Pricing Strategy**: Review premium pricing for fiber optic services
-- **Service Priority**: Focus on security and support service adoption
-
-## 📞 Contact & Contribution
-
-### 📧 **Project Information**
-- **Course**: DAS 601 - Machine Learning
-- **Institution**: East Delta University
-- **Academic Year**: 2024-2025
-- **Project Type**: ML/Ai Final Project
-
-### 🤝 **Collaboration**
-For questions, suggestions, or contributions:
-- Review the comprehensive documentation in `/Results/reports/`
-- Check existing visualizations in `/Results/figures/`
-- Refer to methodology details in analysis notebooks
-- Create issues for technical questions or improvements
-
-### 📚 **Learning Resources**
-- **Python Graph Gallery**: https://python-graph-gallery.com/
-- **EDA Best Practices**: "Exploratory Data Analysis with Python"
-- **Visualization Theory**: Edward Tufte's "The Visual Display of Quantitative Information"
-- **Statistical Analysis**: "Pattern Recognition and Machine Learning" by Bishop
+**Expected Outputs:**
+- **Data:** Cleaned datasets in `Data/interim/` and `Data/output/`
+- **Models:** Trained models in `Models/` (*.pkl files)
+- **Visualizations:** 13 EDA plots in `Results/figures/eda/`
+- **Results:** Performance metrics in `Results/reports/`
 
 ---
 
-## 🏆 **Complete ML Pipeline Achievements**
+## References
 
-### 🎯 **Technical Excellence Standards Met**
-- ✅ **End-to-End ML Pipeline**: Complete machine learning workflow from data to model
-- ✅ **Professional Visualization Portfolio**: 13 publication-ready charts following best practices
-- ✅ **Comprehensive Model Evaluation**: Systematic comparison of 12 ML algorithms with hyperparameter optimization
-- ✅ **Strong Model Performance**: 83.26% AUC-ROC with 79.46% accuracy on test set
-- ✅ **Advanced Optimization**: GridSearchCV and RandomizedSearchCV for top 3 models
+1. **Dataset Source:** Blastchar. (2018). *Telco Customer Churn*. Kaggle. https://www.kaggle.com/datasets/blastchar/telco-customer-churn
 
-## 🎯 Portfolio Navigation
+2. **CatBoost Documentation:** Prokhorenkova, L., Gusev, G., Vorobev, A., Dorogush, A. V., & Gulin, A. (2018). CatBoost: unbiased boosting with categorical features. *Advances in Neural Information Processing Systems*, 31.
 
-### 📊 **For Data Science Roles**
-- **EDA Expertise**: [`02_eda_visuals.ipynb`](EDA_Analysis/02_eda_visuals.ipynb) - 13 professional visualizations
-- **Statistical Analysis**: [`01_dataset_exploration.ipynb`](EDA_Analysis/01_dataset_exploration.ipynb) - Data cleaning & validation
-- **Feature Engineering**: [`feature_engineering.ipynb`](Feature_Engineering/feature_engineering.ipynb) - Advanced feature creation
+3. **Scikit-learn:** Pedregosa, F., Varoquaux, G., Gramfort, A., Michel, V., Thirion, B., Grisel, O., ... & Duchesnay, E. (2011). Scikit-learn: Machine learning in Python. *Journal of Machine Learning Research*, 12, 2825-2857.
 
-### 🤖 **For ML Engineering Roles**
-- **Model Development**: [`baseline_models.ipynb`](Models/baseline_models.ipynb) - 12 algorithms compared systematically
-- **Hyperparameter Tuning**: [`hyperparameter_tuning_final_model_selection.ipynb`](Models/hyperparameter_tuning_final_model_selection.ipynb) - Top 3 models optimized
-- **Final Model**: [`final_model.ipynb`](Models/final_model.ipynb) - CatBoost implementation with comprehensive evaluation
+4. **Customer Churn Analysis:** Verbeke, W., Martens, D., Mues, C., & Baesens, B. (2011). Building comprehensible customer churn prediction models with advanced rule induction techniques. *Expert Systems with Applications*, 38(3), 2354-2364.
 
-### 📈 **For Business Analytics Roles**
-- **Business Insights**: [Results/reports/](Results/reports/) - Model performance summaries
-- **Visual Reports**: [Results/figures/](Results/figures/) - Professional charts and analysis
-- **Performance Metrics**: Detailed model comparison and evaluation results
-
-### 🔧 **For Software Engineering Roles**
-- **Clean Code**: Well-documented, modular Python notebooks
-- **Version Control**: Professional Git workflow with meaningful commits
-- **Project Structure**: Organized directory structure following ML best practices
-- **Reproducibility**: Complete setup instructions and dependency management
+5. **Class Imbalance Handling:** Chawla, N. V., Bowyer, K. W., Hall, L. O., & Kegelmeyer, W. P. (2002). SMOTE: synthetic minority oversampling technique. *Journal of Artificial Intelligence Research*, 16, 321-357.
 
 ---
 
-**⭐ Star this repository if you found it helpful for your learning journey!**
-
-**🔗 Connect with me**: [GitHub Profile](https://github.com/fahimvj)
-
-### 📊 **Machine Learning Deliverables**
-- ✅ **Final Model**: CatBoost Classifier (83.26% AUC-ROC, 79.46% accuracy)
-- ✅ **Model Comparison**: 6 baseline algorithms + 3 optimized models + ensemble methods
-- ✅ **Feature Engineering**: Advanced feature creation and selection with statistical validation
-- ✅ **Hyperparameter Optimization**: Grid search and randomized search with cross-validation
-- ✅ **Production Deployment**: Serialized model with metadata and performance tracking
-
-### 📈 **Business Intelligence Impact**
-- ✅ **Churn Prediction Accuracy**: 83.26% AUC-ROC demonstrates excellent discriminative power
-- ✅ **Risk Factor Identification**: Contract type strongest predictor (-0.400 correlation)
-- ✅ **Customer Segmentation**: High-risk segments identified for targeted retention
-- ✅ **Financial Impact**: Price sensitivity analysis reveals 23% higher costs among churners
-- ✅ **Actionable Insights**: Service bundling and early engagement strategies identified
-
-### 🔬 **Advanced Analysis Completed**
-- ✅ **Ensemble Methods**: Voting classifiers and stacking with multiple base learners
-- ✅ **Error Analysis**: Comprehensive model debugging and performance optimization
-- ✅ **Statistical Validation**: Cross-validation, significance testing, and correlation analysis
-- ✅ **Feature Importance**: Complete feature contribution analysis and selection
-- ✅ **Model Interpretation**: Decision boundaries and prediction confidence analysis
-
-*This comprehensive machine learning project demonstrates mastery of the complete ML pipeline from exploratory data analysis through final model evaluation, showcasing advanced techniques in feature engineering, model selection, hyperparameter optimization, and business intelligence extraction for real-world telecommunications churn prediction.*
-
----
-**🎓 This project represents advanced coursework in machine learning and data science for DAS 601 - Complete ML Pipeline Implementation.**
+*This project demonstrates comprehensive application of machine learning methodologies for business analytics in the DAS-601 course at East Delta University.*
