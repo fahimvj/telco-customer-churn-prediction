@@ -67,9 +67,9 @@ The dataset represents a telecommunications company's customer base with compreh
 ### 🎯 Key Achievements
 - **83.26% AUC-ROC Score** on test set with CatBoost model
 - **13 Professional EDA Visualizations** showcasing data storytelling skills
-- **6 Baseline Models** implemented and compared systematically
-- **Comprehensive Feature Engineering** with domain-specific insights
-- **Systematic Model Evaluation** with proper validation techniques
+- **12 Baseline Models** implemented and compared systematically
+- **Advanced Hyperparameter Tuning** with GridSearchCV and RandomizedSearchCV
+- **Comprehensive Model Evaluation** with 5-fold stratified cross-validation
 
 ### 🛠️ Technical Skills Demonstrated
 - **Data Science**: EDA, Feature Engineering, Statistical Analysis
@@ -179,32 +179,64 @@ The dataset represents a telecommunications company's customer base with compreh
 - **Feature Validation**: Cross-validation and stability testing
 
 ### 🤖 **Phase 3: Baseline Model Development - ✅ COMPLETED**
-**6 Machine Learning Algorithms Evaluated**:
-1. **K-Nearest Neighbors (KNN)** - Instance-based learning
-2. **Logistic Regression** - Linear classification baseline
-3. **Naive Bayes** - Probabilistic classifier
-4. **Random Forest** - Ensemble method
-5. **Support Vector Machine (SVM)** - Kernel-based classification
-6. **XGBoost** - Gradient boosting framework
+**12 Machine Learning Algorithms Evaluated**:
+1. **Logistic Regression** - Linear classification baseline
+2. **Decision Tree** - Tree-based classifier
+3. **Random Forest** - Ensemble bagging method
+4. **XGBoost** - Gradient boosting framework
+5. **LightGBM** - Microsoft's gradient boosting
+6. **CatBoost** - Yandex's gradient boosting
+7. **Support Vector Classifier (SVC)** - Kernel-based classification
+8. **Naive Bayes** - Probabilistic classifier
+9. **K-Nearest Neighbors (KNN)** - Instance-based learning
+10. **Gradient Boosting** - Scikit-learn's gradient boosting
+11. **AdaBoost** - Adaptive boosting ensemble
+12. **Extra Trees** - Extremely randomized trees
+
+**Evaluation Methodology**:
+- 5-fold stratified cross-validation for robust performance estimation
+- Comprehensive metrics: Accuracy, Precision, Recall, AUC-ROC
+- Performance consistency analysis (standard deviation across folds)
+- Professional visualizations showing model rankings and distributions
 
 ### 🎯 **Phase 4: Hyperparameter Tuning - ✅ COMPLETED**
-**Top 3 Models Selected & Optimized**:
-- **Gradient Boosting Classifier** (AUC-ROC: 0.8412)
-- **CatBoost Classifier** (AUC-ROC: 0.8420) ⭐ **WINNER**
-- **AdaBoost Classifier** (AUC-ROC: 0.8371)
+**Top 3 Models Selected for Optimization**:
+- **Gradient Boosting Classifier** - AUC-ROC: 0.8412 (after tuning)
+- **CatBoost Classifier** - AUC-ROC: 0.8420 (after tuning) ⭐ **WINNER**
+- **AdaBoost Classifier** - AUC-ROC: 0.8371 (after tuning)
 
-**Optimization Techniques**:
-- GridSearchCV with 5-fold stratified cross-validation
-- RandomizedSearchCV for efficient parameter space exploration
-- Automated model selection based on AUC-ROC performance
+**Optimization Techniques Applied**:
+- **GridSearchCV**: Exhaustive search over parameter grids
+- **RandomizedSearchCV**: Efficient parameter space exploration (10 iterations)
+- **5-Fold Stratified Cross-Validation**: Robust performance estimation
+- **AUC-ROC Primary Metric**: Optimized for class imbalance handling
+- **Computational Efficiency**: Time tracking for practical deployment considerations
+
+**Hyperparameter Search Spaces**:
+- **Gradient Boosting**: n_estimators, learning_rate, max_depth, min_samples_split, min_samples_leaf
+- **CatBoost**: iterations, learning_rate, depth, l2_leaf_reg (with categorical feature optimization)
+- **AdaBoost**: n_estimators, learning_rate, algorithm combinations
 
 ### 🏆 **Phase 5: Final Model Evaluation - ✅ COMPLETED**
-**CatBoost Final Model Performance**:
-- **Accuracy**: 79.46%
-- **Precision**: 65.92%
-- **Recall**: 47.06%
-- **F1-Score**: 54.91%
-- **AUC-ROC**: 83.26%
+**CatBoost Final Model Performance on Test Set**:
+- **Test Accuracy**: 79.46%
+- **Precision**: 65.92% (2 out of 3 predicted churners are actual churners)
+- **Recall**: 47.06% (nearly half of actual churners correctly identified)
+- **F1-Score**: 54.91% (balanced precision-recall performance)
+- **AUC-ROC**: 83.26% (excellent discriminative power)
+
+**Model Selection Rationale**:
+- **Highest AUC-ROC**: CatBoost achieved the best discriminative performance
+- **Categorical Feature Handling**: Native support for categorical variables without encoding
+- **Training Efficiency**: Faster convergence compared to other gradient boosting methods
+- **Robustness**: Consistent performance across cross-validation folds
+- **Business Suitability**: Balance between precision and recall appropriate for churn prediction
+
+**Performance Interpretation**:
+- **Strong AUC-ROC (83.26%)**: Model effectively ranks potential churners
+- **Moderate Precision (65.92%)**: Acceptable false positive rate for marketing campaigns
+- **Moderate Recall (47.06%)**: Captures nearly half of actual churners, room for improvement
+- **Business Impact**: Cost-effective for targeted retention with manageable campaign costs
 
 ### 🔬 **Phase 6: Advanced Analysis - ✅ COMPLETED**
 - **Ensemble Methods**: Voting classifiers and stacking
@@ -354,13 +386,19 @@ code .
 - **F1-Score**: 54.91%
 
 ### 📊 Model Comparison Results
-**6 Baseline Models Evaluated**:
-1. **CatBoost** - AUC-ROC: 83.26% ⭐ **Best**
-2. **Gradient Boosting** - AUC-ROC: 84.12%
-3. **AdaBoost** - AUC-ROC: 83.71%
-4. **Random Forest** - AUC-ROC: ~82%
-5. **XGBoost** - AUC-ROC: ~81%
-6. **Other Algorithms** - Lower performance
+**12 Baseline Models Evaluated**:
+1. **CatBoost** - AUC-ROC: 83.56% (baseline), 84.20% (tuned) ⭐ **Best**
+2. **Gradient Boosting** - AUC-ROC: 83.90% (baseline), 84.12% (tuned)
+3. **AdaBoost** - AUC-ROC: 83.45% (baseline), 83.71% (tuned)
+4. **LightGBM** - AUC-ROC: 82.42% (baseline)
+5. **Logistic Regression** - AUC-ROC: 82.17% (baseline)
+6. **XGBoost** - AUC-ROC: 81.77% (baseline)
+7. **Random Forest** - AUC-ROC: 80.38% (baseline)
+8. **Extra Trees** - AUC-ROC: 78.21% (baseline)
+9. **K-Nearest Neighbors** - AUC-ROC: 74.08% (baseline)
+10. **Naive Bayes** - AUC-ROC: 72.80% (baseline)
+11. **Decision Tree** - AUC-ROC: 65.88% (baseline)
+12. **Support Vector Classifier** - AUC-ROC: 57.39% (baseline)
 
 ### 💡 Key Business Insights
 - **Contract Type**: Strongest predictor of churn
@@ -841,9 +879,9 @@ For questions, suggestions, or contributions:
 ### 🎯 **Technical Excellence Standards Met**
 - ✅ **End-to-End ML Pipeline**: Complete machine learning workflow from data to model
 - ✅ **Professional Visualization Portfolio**: 13 publication-ready charts following best practices
-- ✅ **Systematic Model Evaluation**: Comprehensive comparison of 6 ML algorithms with optimization
+- ✅ **Comprehensive Model Evaluation**: Systematic comparison of 12 ML algorithms with hyperparameter optimization
 - ✅ **Strong Model Performance**: 83.26% AUC-ROC with 79.46% accuracy on test set
-- ✅ **Comprehensive Documentation**: Complete methodology and reproducible workflows
+- ✅ **Advanced Optimization**: GridSearchCV and RandomizedSearchCV for top 3 models
 
 ## 🎯 Portfolio Navigation
 
@@ -853,9 +891,9 @@ For questions, suggestions, or contributions:
 - **Feature Engineering**: [`feature_engineering.ipynb`](Feature_Engineering/feature_engineering.ipynb) - Advanced feature creation
 
 ### 🤖 **For ML Engineering Roles**
-- **Model Development**: [`baseline_models.ipynb`](Models/baseline_models.ipynb) - 6 algorithms compared
-- **Hyperparameter Tuning**: [`hyperparameter_tuning_final_model_selection.ipynb`](Models/hyperparameter_tuning_final_model_selection.ipynb)
-- **Final Model**: [`final_model.ipynb`](Models/final_model.ipynb) - CatBoost implementation
+- **Model Development**: [`baseline_models.ipynb`](Models/baseline_models.ipynb) - 12 algorithms compared systematically
+- **Hyperparameter Tuning**: [`hyperparameter_tuning_final_model_selection.ipynb`](Models/hyperparameter_tuning_final_model_selection.ipynb) - Top 3 models optimized
+- **Final Model**: [`final_model.ipynb`](Models/final_model.ipynb) - CatBoost implementation with comprehensive evaluation
 
 ### 📈 **For Business Analytics Roles**
 - **Business Insights**: [Results/reports/](Results/reports/) - Model performance summaries
